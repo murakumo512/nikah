@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="id" data-theme="doodle" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Undangan Pernikahan - Mardonius & Adinda</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts for both themes -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&family=Great+Vibes&family=Kalam:wght@300;400;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* DOODLE THEME - Perfected UI/UX */
+            --bg-main: #fdfbf7; /* Creamy paper */
+            --bg-texture: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            --text-main: #292524; /* Stone 800 */
+            --text-accent: #b45309; /* Amber 700 - elegant contrast */
+            --font-head: 'Caveat', cursive;
+            --font-body: 'Kalam', cursive;
+            
+            /* Frosted glass for perfect readability */
+            --card-bg: rgba(255, 255, 255, 0.85); 
+            --card-border: 2px solid #44403c;
+            --card-br: 255px 15px 225px 15px / 15px 225px 15px 255px;
+            --card-br-hover: 15px 225px 15px 255px / 255px 15px 225px 15px;
+            --card-shadow: 6px 6px 0px rgba(68, 64, 60, 0.15);
+            
+            --btn-bg: #292524;
+            --btn-text: #fdfbf7;
+            --btn-hover: #b45309;
+            
+            --input-border: 2px solid #a8a29e;
+            --input-bg: rgba(255, 255, 255, 0.5);
+            
+            --glass-wrap: rgba(255, 255, 255, 0.7);
+        }
+
+        [data-theme="royal"] {
+            /* ROYAL FAIRYTALE THEME */
+            --bg-main: #0b0f19;
+            --bg-texture: linear-gradient(180deg, #0b0f19 0%, #1e1b4b 50%, #2e1065 100%);
+            --text-main: #f8fafc;
+            --text-accent: #fbbf24;
+            --font-head: 'Great Vibes', cursive;
+            --font-body: 'Playfair Display', serif;
+            
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --card-border: 1px solid rgba(251, 191, 36, 0.4);
+            --card-br: 12px;
+            --card-br-hover: 12px;
+            --card-shadow: 0 10px 40px -10px rgba(251, 191, 36, 0.25);
+            
+            --btn-bg: linear-gradient(135deg, #b45309, #fbbf24, #b45309);
+            --btn-text: #0f172a;
+            --btn-hover: linear-gradient(135deg, #fbbf24, #fef08a, #fbbf24);
+            
+            --input-border: 1px solid rgba(251, 191, 36, 0.4);
+            --input-bg: rgba(15, 23, 42, 0.8);
+            
+            --glass-wrap: rgba(11, 15, 25, 0.6);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: var(--bg-texture);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            transition: background-color 1s ease, color 1s ease;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body.loading {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        h1, h2, h3, .font-heading {
+            font-family: var(--font-head);
+            color: var(--text-accent);
+            transition: color 1s ease;
+        }
+
+        [data-theme="royal"] .gold-text {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        /* Visibility helpers */
+        .doodle-only { transition: opacity 0.8s ease; opacity: 1; visibility: visible; }
+        .royal-only { transition: opacity 0.8s ease; opacity: 0; visibility: hidden; position: absolute; pointer-events: none; }
+        [data-theme="royal"] .doodle-only { opacity: 0; visibility: hidden; pointer-events: none; position: absolute; }
+        [data-theme="royal"] .royal-only { opacity: 1; visibility: visible; pointer-events: auto; position: relative; }
+
+        .theme-card {
+            background: var(--card-bg);
+            border: var(--card-border);
+            border-radius: var(--card-br);
+            box-shadow: var(--card-shadow);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+        }
+        
+        .theme-card:hover {
+            border-radius: var(--card-br-hover);
+            transform: translateY(-5px);
+            [data-theme="royal"] & { box-shadow: 0 15px 50px -10px rgba(251, 191, 36, 0.4); border-color: rgba(251, 191, 36, 0.8); }
+        }
+
+        /* Perfect Readability Wrapper for Text */
+        .glass-text-wrap {
+            background: var(--glass-wrap);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 2rem;
+            border-radius: 2rem;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            [data-theme="royal"] & { border: 1px solid rgba(251, 191, 36, 0.1); }
+        }
+
+        .theme-button {
+            background: var(--btn-bg);
+            color: var(--btn-text);
+            border-radius: var(--card-br);
+            font-family: var(--font-head);
+            border: none;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            text-transform: capitalize;
+            font-size: 1.25rem;
+            letter-spacing: 1px;
+        }
+        
+        [data-theme="royal"] .theme-button {
+            background-size: 200% auto;
+            font-family: var(--font-body);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.85rem;
+        }
+
+        .theme-button:hover {
+            background: var(--btn-hover);
+            border-radius: var(--card-br-hover);
+            transform: scale(1.05);
+            [data-theme="royal"] & { background-position: right center; }
+        }
+
+        .theme-input {
+            background: var(--input-bg);
+            border: var(--input-border);
+            border-radius: var(--card-br);
+            color: var(--text-main);
+            transition: all 0.3s ease;
+        }
+        .theme-input:focus {
+            outline: none;
+            border-color: var(--text-accent);
+            background: var(--card-bg);
+            [data-theme="royal"] & { box-shadow: 0 0 12px rgba(251, 191, 36, 0.3); }
+        }
+
+        .image-frame {
+            position: relative;
+            padding: 12px;
+            background: var(--card-bg);
+            border: var(--card-border);
+            border-radius: var(--card-br);
+            transition: all 0.6s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hero-frame {
+            border-radius: 150px 150px 15px 15px;
+            [data-theme="royal"] & { border-radius: 150px 150px 8px 8px; }
+        }
+        .hero-frame img {
+            border-radius: 140px 140px 5px 5px;
+            [data-theme="royal"] & { border-radius: 140px 140px 4px 4px; }
+        }
+
+        .washi-tape {
+            position: absolute; top: -15px; left: 50%; transform: translateX(-50%) rotate(-4deg);
+            width: 130px; height: 35px; background-color: rgba(226, 232, 240, 0.9); z-index: 10;
+            border: 1px solid #cbd5e1; box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+        }
+        [data-theme="royal"] .washi-tape { display: none; }
+
+        .filigree-corner {
+            position: absolute; width: 45px; height: 45px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='%23fbbf24' stroke-width='2'%3E%3Cpath d='M10,0 Q10,10 0,10 M20,0 Q20,20 0,20 M30,0 Q30,30 0,30 M10,0 A40,40 0 0,1 0,40'/%3E%3C/svg%3E");
+            background-size: contain; background-repeat: no-repeat;
+            display: none; z-index: 10; opacity: 0.9;
+        }
+        .filigree-corner.tl { top: 8px; left: 8px; transform: rotate(0deg); }
+        .filigree-corner.tr { top: 8px; right: 8px; transform: rotate(90deg); }
+        .filigree-corner.bl { bottom: 8px; left: 8px; transform: rotate(-90deg); }
+        .filigree-corner.br { bottom: 8px; right: 8px; transform: rotate(180deg); }
+        [data-theme="royal"] .filigree-corner { display: block; }
+
+        @keyframes float-lantern {
+            0% { transform: translateY(100vh) scale(0.8) rotate(-5deg); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) scale(1.2) rotate(5deg); opacity: 0; }
+        }
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.1; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 8px #fbbf24; }
+        }
+        
+        /* Subtle Doodle Animations */
+        @keyframes float-doodle {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(15px, -20px) rotate(10deg); }
+        }
+        @keyframes spin-doodle {
+            100% { transform: rotate(360deg); }
+        }
+        @keyframes pulse-doodle {
+            0%, 100% { transform: scale(1) rotate(-3deg); }
+            50% { transform: scale(1.15) rotate(3deg); }
+        }
+
+        .lantern {
+            position: absolute; width: 20px; height: 30px;
+            background: radial-gradient(circle at 50% 100%, #fbbf24, #d97706);
+            border-radius: 10px 10px 4px 4px; box-shadow: 0 0 20px 5px rgba(251, 191, 36, 0.6);
+            animation: float-lantern linear infinite;
+        }
+        .lantern::after {
+            content: ''; position: absolute; bottom: -5px; left: 20%; width: 60%; height: 5px;
+            background: #b45309; border-radius: 0 0 5px 5px;
+        }
+
+        .star-dust {
+            position: absolute; background: white; border-radius: 50%;
+            animation: twinkle ease-in-out infinite;
+        }
+
+        .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.5, 0, 0, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        #preloader {
+            position: fixed; inset: 0; z-index: 10000;
+            background-color: #050505;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+        }
+        
+        .loader-diamond {
+            width: 40px; height: 40px;
+            border: 2px solid #38bdf8;
+            transform: rotate(45deg);
+            box-shadow: 0 0 20px #38bdf8, inset 0 0 20px #38bdf8;
+            animation: pulse-diamond 1s infinite alternate, spin-diamond 4s linear infinite;
+            z-index: 2;
+        }
+        
+        .loader-line {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0; height: 2px;
+            background: #38bdf8;
+            box-shadow: 0 0 15px #38bdf8;
+            animation: expand-line 2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+            z-index: 1;
+        }
+
+        .loader-flash {
+            position: absolute; inset: 0;
+            background-color: white; opacity: 0; z-index: 3; pointer-events: none;
+        }
+
+        @keyframes pulse-diamond {
+            0% { transform: rotate(45deg) scale(0.8); box-shadow: 0 0 10px #38bdf8; }
+            100% { transform: rotate(45deg) scale(1.2); box-shadow: 0 0 30px #38bdf8, inset 0 0 30px #38bdf8; }
+        }
+        @keyframes spin-diamond { 100% { transform: rotate(405deg); } }
+        @keyframes expand-line {
+            0% { width: 0; opacity: 1; }
+            80% { width: 100vw; opacity: 1; }
+            100% { width: 100vw; opacity: 0; }
+        }
+        body.loaded #preloader .loader-flash { animation: cinematic-flash 1s forwards; }
+        @keyframes cinematic-flash {
+            0% { opacity: 0; }
+            30% { opacity: 1; }
+            100% { opacity: 0; visibility: hidden; }
+        }
+
+        /* Fixed elements */
+        #theme-switcher-wrapper { position: fixed; top: 20px; right: 20px; z-index: 100; transition: opacity 0.5s; opacity: 0; pointer-events: none; }
+        body.loaded #theme-switcher-wrapper { opacity: 1; pointer-events: auto; }
+        
+        /* Background Container MUST stay completely behind content */
+        #bg-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; z-index: 0; }
+        
+        .royal-castle {
+            position: absolute; bottom: 0; width: 100%; height: auto;
+            max-height: 40vh; object-fit: cover; object-position: bottom;
+            opacity: 0.4; filter: drop-shadow(0 -5px 15px rgba(251, 191, 36, 0.2));
+            z-index: 1;
+        }
+        
+        /* Main content needs to be above background */
+        main { position: relative; z-index: 10; }
+    </style>
+</head>
+<body class="antialiased loading">
+
+    <div id="preloader">
+        <div class="loader-line"></div>
+        <div class="loader-diamond"></div>
+        <div class="loader-flash"></div>
+    </div>
+
+    <div id="theme-switcher-wrapper">
+        <button id="themeToggle" class="theme-card px-4 py-2 flex items-center gap-3 cursor-pointer text-sm font-bold shadow-lg">
+            <span id="themeIcon" class="text-2xl transition-transform duration-300">👑</span>
+            <span id="themeText" class="font-body tracking-wide">Royal Mode</span>
+        </button>
+    </div>
+
+    <div id="bg-container">
+        <!-- Doodle layer will be populated by JS with subtle outlines -->
+        <div id="doodle-layer" class="doodle-only w-full h-full relative"></div>
+        
+        <div id="royal-layer" class="royal-only w-full h-full relative">
+            <svg class="royal-castle text-yellow-600" viewBox="0 0 1000 300" preserveAspectRatio="xMidYMax slice" fill="currentColor">
+                <path d="M0,300 L1000,300 L1000,200 L960,200 L960,130 L930,130 L930,200 L880,200 L880,100 L840,40 L800,100 L800,200 L730,200 L730,80 L680,10 L630,80 L630,170 L580,170 L580,110 L520,30 L480,30 L420,110 L420,170 L370,170 L370,80 L320,10 L270,80 L270,200 L200,200 L200,100 L160,40 L120,100 L120,200 L70,200 L70,130 L40,130 L40,200 L0,200 Z" opacity="0.3"/>
+                <path d="M500,220 A60,60 0 0,1 380,220 L380,300 L500,300 Z" fill="var(--bg-main)"/>
+                <rect x="420" y="80" width="20" height="30" fill="var(--text-accent)" opacity="0.8" rx="10"/>
+                <rect x="650" y="100" width="15" height="25" fill="var(--text-accent)" opacity="0.8" rx="7"/>
+                <rect x="300" y="100" width="15" height="25" fill="var(--text-accent)" opacity="0.8" rx="7"/>
+            </svg>
+        </div>
+    </div>
+
+    <main class="opacity-0 transition-opacity duration-1000 delay-500" id="main-content">
+        <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center p-6 text-center pt-24">
+            <div class="reveal glass-text-wrap max-w-4xl mx-auto flex flex-col items-center">
+                
+                <div class="image-frame hero-frame w-64 h-80 md:w-80 md:h-[24rem] mx-auto mb-10 rotate-[2deg] hover:rotate-0">
+                    <div class="washi-tape"></div>
+                    <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                    <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                    <!-- Added subtle styling to placeholder to look complete -->
+                    <img src="https://images.unsplash.com/photo-1583939000240-690a61d154ee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pre-Wedding" class="w-full h-full object-cover filter contrast-110">
+                </div>
+
+                <p class="text-sm md:text-lg tracking-[0.3em] uppercase mb-4 opacity-80 royal-only font-bold text-accent">A Magical Celebration</p>
+                <p class="text-xl mb-2 doodle-only font-bold">Yay! We are tying the knot!</p>
+                
+                <h1 class="font-heading text-6xl md:text-8xl lg:text-[9rem] leading-none mb-6 drop-shadow-md">
+                    <span class="gold-text">Mardonius</span> <br> 
+                    <span class="text-4xl md:text-6xl text-main opacity-60 mx-4 my-2 block">&amp;</span>
+                    <span class="gold-text">Adinda</span>
+                </h1>
+                
+                <p class="text-2xl md:text-3xl mb-10 opacity-90 font-bold gold-text">December 31, 2026</p>
+                
+                <a href="#events" class="theme-button px-8 py-4 text-xl shadow-lg inline-block hover:-translate-y-1">
+                    Save the Date
+                </a>
+            </div>
+        </section>
+
+        <section id="quote" class="relative py-24 px-6 max-w-4xl mx-auto text-center reveal">
+            <div class="glass-text-wrap">
+                <svg class="w-48 h-8 mx-auto mb-8 royal-only text-accent opacity-70" viewBox="0 0 200 30" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10,15 Q50,15 100,25 T190,15 M100,5 A5,5 0 1,1 100,15 A5,5 0 1,1 100,5" />
+                </svg>
+                
+                <div class="text-3xl md:text-5xl font-heading leading-relaxed opacity-90 gold-text">
+                    "Dan firman-Nya: Sebab itu laki-laki akan meninggalkan ayah dan ibunya dan bersatu dengan isterinya, sehingga keduanya itu menjadi satu daging."
+                </div>
+                <p class="mt-6 text-xl font-bold uppercase tracking-widest opacity-70 text-accent">— Matius 19:5 —</p>
+                
+                <svg class="w-48 h-8 mx-auto mt-8 royal-only text-accent opacity-70" viewBox="0 0 200 30" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10,15 Q50,15 100,5 T190,15 M100,15 A5,5 0 1,0 100,25 A5,5 0 1,0 100,15" />
+                </svg>
+            </div>
+        </section>
+
+        <section id="couple" class="relative py-24 px-6 max-w-6xl mx-auto text-center">
+            <div class="reveal mb-16 glass-text-wrap max-w-3xl mx-auto">
+                <h2 class="font-heading text-5xl md:text-7xl mb-4 gold-text">Kami Yang Berbahagia</h2>
+                <p class="text-xl opacity-80">Dua jiwa, satu hati, memulai perjalanan indah bersama-sama atas restu keluarga kami.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-16 md:gap-12">
+                <div class="flex-1 flex flex-col items-center reveal glass-text-wrap">
+                    <div class="image-frame w-64 h-64 md:w-80 md:h-80 mb-8 rotate-[-2deg] hover:rotate-0">
+                        <div class="washi-tape" style="background-color: rgba(203, 213, 225, 0.9);"></div>
+                        <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                        <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mardonius" class="w-full h-full object-cover rounded filter sepia-[15%]">
+                    </div>
+                    <h3 class="font-heading text-4xl mb-2 gold-text">Mardonius Riel</h3>
+                    <p class="opacity-90 font-bold mb-1">Putra dari</p>
+                    <p class="opacity-70 text-lg">Bapak Haha & Ibu Hihi</p>
+                </div>
+
+                <div class="text-6xl font-heading text-accent opacity-70 hidden md:block mt-[-100px] reveal glass-text-wrap px-4 py-8 !rounded-full">
+                    <span class="doodle-only">&amp;</span>
+                    <span class="royal-only">✧</span>
+                </div>
+
+                <div class="flex-1 flex flex-col items-center reveal glass-text-wrap" style="transition-delay: 200ms;">
+                    <div class="image-frame w-64 h-64 md:w-80 md:h-80 mb-8 rotate-[2deg] hover:rotate-0">
+                        <div class="washi-tape" style="background-color: rgba(226, 232, 240, 0.9);"></div>
+                        <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                        <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Adinda" class="w-full h-full object-cover rounded filter sepia-[15%]">
+                    </div>
+                    <h3 class="font-heading text-4xl mb-2 gold-text">Adinda Permatasiwi</h3>
+                    <p class="opacity-90 font-bold mb-1">Putri dari</p>
+                    <p class="opacity-70 text-lg">Bapak Haha & Ibu Hihi</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="events" class="relative py-24 px-6 max-w-5xl mx-auto">
+            <div class="text-center mb-16 reveal glass-text-wrap max-w-3xl mx-auto">
+                <h2 class="font-heading text-5xl md:text-7xl mb-4 gold-text">Waktu & Tempat</h2>
+                
+                <div class="flex flex-wrap justify-center gap-4 mt-10" id="countdown">
+                    <div class="theme-card w-24 h-28 md:w-32 md:h-36 flex flex-col items-center justify-center">
+                        <div class="filigree-corner tl"></div><div class="filigree-corner br"></div>
+                        <span id="days" class="font-heading text-5xl md:text-6xl font-bold text-accent">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 opacity-80 font-bold">Hari</span>
+                    </div>
+                    <div class="theme-card w-24 h-28 md:w-32 md:h-36 flex flex-col items-center justify-center">
+                        <div class="filigree-corner tl"></div><div class="filigree-corner br"></div>
+                        <span id="hours" class="font-heading text-5xl md:text-6xl font-bold text-accent">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 opacity-80 font-bold">Jam</span>
+                    </div>
+                    <div class="theme-card w-24 h-28 md:w-32 md:h-36 flex flex-col items-center justify-center">
+                        <div class="filigree-corner tl"></div><div class="filigree-corner br"></div>
+                        <span id="minutes" class="font-heading text-5xl md:text-6xl font-bold text-accent">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 opacity-80 font-bold">Menit</span>
+                    </div>
+                    <div class="theme-card w-24 h-28 md:w-32 md:h-36 flex flex-col items-center justify-center">
+                        <div class="filigree-corner tl"></div><div class="filigree-corner br"></div>
+                        <span id="seconds" class="font-heading text-5xl md:text-6xl font-bold text-accent">00</span>
+                        <span class="text-xs md:text-sm uppercase tracking-wider mt-2 opacity-80 font-bold">Detik</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="theme-card p-10 flex flex-col items-center text-center reveal">
+                    <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                    <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                    
+                    <div class="text-4xl mb-4 doodle-only">🕊️</div>
+                    <svg class="w-12 h-12 mb-4 royal-only text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2l3 6 6 .5-4.5 4 1.5 6-6-3.5L6 19l1.5-6-4.5-4 6-.5 3-6z"/></svg>
+
+                    <h3 class="font-heading text-5xl mb-4 border-b-2 border-accent pb-2 inline-block gold-text">Pemberkatan</h3>
+                    <p class="text-2xl font-bold mb-2">15:00 WIB</p>
+                    <p class="mb-6 opacity-80 text-lg">Kamis, 31 Desember 2026</p>
+                    
+                    <p class="font-bold text-xl text-accent mb-1">Gereja / Lokasi</p>
+                    <p class="opacity-80 mb-8 max-w-sm">Jl. Harapan III A No.70 6, RT.6/RW.10, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13620</p>
+                    
+                    <a href="#" class="theme-button px-6 py-3 mt-auto w-full text-center">Buka Peta</a>
+                </div>
+
+                <div class="theme-card p-10 flex flex-col items-center text-center reveal" style="transition-delay: 200ms;">
+                    <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                    <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                    
+                    <div class="text-4xl mb-4 doodle-only">🍽️</div>
+                    <svg class="w-12 h-12 mb-4 royal-only text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 15.546c-.523 0-1.046.151-1.5.454a2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.704 2.704 0 00-3 0 2.704 2.704 0 01-3 0 2.701 2.701 0 00-1.5-.454M9 6v2m3-2v2m3-2v2M9 3h.01M12 3h.01M15 3h.01M21 21v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7h18zm-3-9v-2a2 2 0 00-2-2H8a2 2 0 00-2 2v2h12z"/></svg>
+
+                    <h3 class="font-heading text-5xl mb-4 border-b-2 border-accent pb-2 inline-block gold-text">Resepsi</h3>
+                    <p class="text-2xl font-bold mb-2">18:00 WIB - Selesai</p>
+                    <p class="mb-6 opacity-80 text-lg">Kamis, 31 Desember 2026</p>
+                    
+                    <p class="font-bold text-xl text-accent mb-1">Gedung Resepsi</p>
+                    <p class="opacity-80 mb-8 max-w-sm">Jl. Harapan III A No.70 6, RT.6/RW.10, Cipinang Melayu, Kec. Makasar, Kota Jakarta Timur, Daerah Khusus Ibukota Jakarta 13620</p>
+                    
+                    <a href="#" class="theme-button px-6 py-3 mt-auto w-full text-center">Buka Peta</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="relative py-24 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16 reveal glass-text-wrap max-w-3xl mx-auto">
+                <h2 class="font-heading text-5xl md:text-7xl mb-4 gold-text">Galeri Kenangan</h2>
+                <p class="text-xl opacity-80">Momen-momen indah yang menuntun kami hingga hari bahagia ini.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+                <div class="image-frame h-64 sm:h-80 rotate-[-1deg] reveal">
+                    <div class="washi-tape"></div><div class="filigree-corner tl"></div><div class="filigree-corner br"></div>
+                    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 1" class="w-full h-full object-cover filter contrast-110">
+                </div>
+                <div class="image-frame h-64 sm:h-80 rotate-[2deg] reveal" style="transition-delay: 100ms;">
+                    <div class="washi-tape"></div><div class="filigree-corner tr"></div><div class="filigree-corner bl"></div>
+                    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 2" class="w-full h-full object-cover filter contrast-110">
+                </div>
+                <div class="image-frame h-64 sm:h-80 rotate-[-2deg] sm:col-span-2 lg:col-span-1 reveal" style="transition-delay: 200ms;">
+                    <div class="washi-tape"></div><div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                    <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 3" class="w-full h-full object-cover filter contrast-110">
+                </div>
+                <div class="image-frame h-64 sm:h-80 rotate-[1deg] lg:col-span-2 reveal">
+                    <div class="washi-tape"></div><div class="filigree-corner tl"></div><div class="filigree-corner br"></div>
+                    <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Gallery 4" class="w-full h-full object-cover filter contrast-110">
+                </div>
+                <div class="image-frame h-64 sm:h-80 rotate-[-1deg] reveal" style="transition-delay: 100ms;">
+                    <div class="washi-tape"></div><div class="filigree-corner tr"></div><div class="filigree-corner bl"></div>
+                    <img src="https://images.unsplash.com/photo-1543886567-4ebc3f6f9661?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Gallery 5" class="w-full h-full object-cover filter contrast-110">
+                </div>
+            </div>
+        </section>
+
+        <section id="rsvp" class="relative py-24 px-6 max-w-3xl mx-auto">
+            <div class="theme-card p-8 md:p-14 reveal">
+                <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                
+                <div class="text-center mb-10">
+                    <h2 class="font-heading text-5xl md:text-7xl mb-4 gold-text">Konfirmasi Kehadiran</h2>
+                    <p class="opacity-80 text-lg">Mohon konfirmasi sebelum 1 November 2026</p>
+                </div>
+
+                <form id="rsvp-form" class="space-y-6" onsubmit="submitRSVP(event)">
+                    <div>
+                        <label class="block font-bold mb-2 ml-2" for="name">Nama Tamu</label>
+                        <input type="text" id="name" required placeholder="Nama lengkap Anda..." class="theme-input w-full p-4 text-lg">
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block font-bold mb-2 ml-2" for="attendance">Kehadiran</label>
+                            <select id="attendance" class="theme-input w-full p-4 appearance-none cursor-pointer text-lg">
+                                <option value="yes">Ya, saya akan hadir</option>
+                                <option value="no">Maaf, belum bisa hadir</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold mb-2 ml-2" for="guests">Jumlah Tamu</label>
+                            <input type="number" id="guests" min="1" max="5" value="1" class="theme-input w-full p-4 text-lg">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold mb-2 ml-2" for="message">Pesan & Doa</label>
+                        <textarea id="message" rows="4" placeholder="Tulis doa restu untuk kedua mempelai..." class="theme-input w-full p-4 text-lg"></textarea>
+                    </div>
+
+                    <div class="text-center pt-6">
+                        <button type="submit" id="submitBtn" class="theme-button px-12 py-4 text-xl w-full md:w-auto min-w-[200px]">Kirim RSVP</button>
+                    </div>
+                </form>
+                
+                <div id="notification" class="hidden mt-6 p-4 rounded text-center font-bold transition-opacity" style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10b981; color: #10b981;">
+                    Terima kasih! Konfirmasi dan doa restu Anda telah kami terima.
+                </div>
+            </div>
+        </section>
+
+        <section id="thank-you" class="relative py-24 px-6 max-w-4xl mx-auto text-center pb-40">
+            <div class="reveal glass-text-wrap">
+                <h2 class="font-heading text-6xl md:text-8xl mb-6 gold-text">Terima Kasih</h2>
+                <p class="text-xl md:text-2xl opacity-80 mb-12">Merupakan suatu kehormatan dan kebahagiaan bagi kami <br class="hidden md:block"> apabila Bapak/Ibu/Saudara/i berkenan hadir dan memberikan doa restu.</p>
+                
+                <div class="image-frame w-full max-w-3xl mx-auto h-64 md:h-[400px] rotate-[1deg] hover:rotate-0 transition-transform">
+                    <div class="washi-tape" style="background-color: rgba(226, 232, 240, 0.9);"></div>
+                    <div class="filigree-corner tl"></div><div class="filigree-corner tr"></div>
+                    <div class="filigree-corner bl"></div><div class="filigree-corner br"></div>
+                    <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Thank You" class="w-full h-full object-cover filter contrast-110">
+                </div>
+                
+                <p class="font-heading text-4xl mt-12 text-accent">Kami yang berbahagia,</p>
+                <p class="font-heading text-5xl md:text-6xl mt-4 gold-text">Mardonius & Adinda</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Cinematic Pre-loader Logic
+            const loaderDuration = 2500; 
+            setTimeout(() => {
+                document.body.classList.add('loaded'); // Trigger flash
+                setTimeout(() => {
+                    const preloader = document.getElementById('preloader');
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                    document.body.classList.remove('loading');
+                    document.getElementById('main-content').style.opacity = '1';
+                }, 800); 
+            }, loaderDuration);
+
+            // 2. Theme Toggle Logic
+            const htmlEl = document.documentElement;
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const themeText = document.getElementById('themeText');
+
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = htmlEl.getAttribute('data-theme');
+                if (currentTheme === 'doodle') {
+                    htmlEl.setAttribute('data-theme', 'royal');
+                    themeIcon.innerText = '✏️';
+                    themeText.innerText = 'Doodle Mode';
+                } else {
+                    htmlEl.setAttribute('data-theme', 'doodle');
+                    themeIcon.innerText = '👑';
+                    themeText.innerText = 'Royal Mode';
+                }
+            });
+
+            // 3. Generate Background Ornaments
+            const bgContainer = document.getElementById('bg-container');
+            const doodleLayer = document.getElementById('doodle-layer');
+            const royalLayer = document.getElementById('royal-layer');
+            
+            const updateBgHeight = () => {
+                bgContainer.style.height = `${document.body.scrollHeight}px`;
+            };
+            window.addEventListener('resize', updateBgHeight);
+            setTimeout(updateBgHeight, 3500); // Recalculate after images load
+
+            // PERFECT UI/UX DOODLES: 
+            // Removed solid fills. Using ONLY outlines with a subtle stone color.
+            const subtleColor = '#a8a29e'; // Tailwind stone-400
+            
+            const doodleSVGs = [
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>`, /* Outline Heart */
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`, /* Outline Star */
+                `<svg viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10,50 Q30,20 50,50 T90,50"/></svg>`, /* Squiggle */
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path></svg>`, /* Outline Smiley */
+                `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>` /* Outline Note */
+            ];
+
+            const animations = ['float-doodle', 'spin-doodle', 'pulse-doodle'];
+
+            // Generate 120 subtle background doodles
+            for (let i = 0; i < 120; i++) {
+                const el = document.createElement('div');
+                el.innerHTML = doodleSVGs[Math.floor(Math.random() * doodleSVGs.length)];
+                el.style.position = 'absolute';
+                
+                el.style.left = `${Math.random() * 95}%`;
+                el.style.top = `${Math.random() * 7500}px`; 
+                
+                const size = 20 + Math.random() * 40;
+                el.style.width = `${size}px`;
+                el.style.height = `${size}px`;
+                
+                // CRITICAL UI/UX: Enforce subtle color and low opacity
+                el.style.color = subtleColor;
+                el.style.opacity = (0.15 + Math.random() * 0.1).toString(); // Opacity strictly between 0.15 - 0.25
+                
+                const initialRotation = Math.random() * 360;
+                const animType = animations[Math.floor(Math.random() * animations.length)];
+                const animDuration = 6 + Math.random() * 10; 
+                const animDelay = Math.random() * 3; 
+                const animDirection = animType === 'spin-doodle' ? 'linear infinite' : 'infinite alternate ease-in-out';
+                
+                const wrapper = document.createElement('div');
+                wrapper.style.transform = `rotate(${initialRotation}deg)`;
+                wrapper.style.position = 'absolute';
+                wrapper.style.left = el.style.left;
+                wrapper.style.top = el.style.top;
+                
+                el.style.left = '0';
+                el.style.top = '0';
+                el.style.position = 'relative';
+                el.style.animation = `${animType} ${animDuration}s ${animDelay}s ${animDirection}`;
+                
+                wrapper.appendChild(el);
+                doodleLayer.appendChild(wrapper);
+            }
+
+            /* Royal Theme Particles */
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star-dust');
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 7000}px`;
+                const sSize = Math.random() * 3 + 1;
+                star.style.width = `${sSize}px`;
+                star.style.height = `${sSize}px`;
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                star.style.animationDuration = `${3 + Math.random() * 4}s`;
+                royalLayer.appendChild(star);
+            }
+
+            for (let i = 0; i < 25; i++) {
+                const lantern = document.createElement('div');
+                lantern.classList.add('lantern');
+                lantern.style.left = `${Math.random() * 90 + 5}%`;
+                lantern.style.top = `${Math.random() * 6000 + 500}px`;
+                lantern.style.animationDelay = `${Math.random() * 15}s`;
+                lantern.style.animationDuration = `${12 + Math.random() * 10}s`;
+                royalLayer.appendChild(lantern);
+            }
+
+            // 4. Scroll Reveal
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(reveal => observer.observe(reveal));
+
+            // 5. Countdown Logic
+            const targetDate = new Date("Dec 31, 2026 15:00:00").getTime();
+            const timer = setInterval(() => {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    clearInterval(timer);
+                    document.getElementById("countdown").innerHTML = "<div class='font-heading text-5xl text-accent font-bold mt-4'>Hari Bahagia Telah Tiba!</div>";
+                    return;
+                }
+                document.getElementById("days").innerText = Math.floor(distance / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+                document.getElementById("hours").innerText = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+                document.getElementById("minutes").innerText = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+                document.getElementById("seconds").innerText = Math.floor((distance % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            }, 1000);
+        });
+
+        // 6. RSVP Submit
+        function submitRSVP(event) {
+            event.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerText;
+            
+            btn.innerText = "Mengirim...";
+            btn.style.opacity = "0.7";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                document.getElementById('rsvp-form').reset();
+                btn.innerText = originalText;
+                btn.style.opacity = "1";
+                btn.disabled = false;
+                
+                const notif = document.getElementById('notification');
+                notif.classList.remove('hidden');
+                setTimeout(() => { notif.classList.add('hidden'); }, 5000);
+            }, 1800);
+        }
+    </script>
+</body>
+</html>
